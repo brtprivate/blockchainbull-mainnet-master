@@ -1,6 +1,10 @@
-- [x] Update UserRecord interface in contractService.ts: isRegistered: boolean
-- [x] Update getUserRecord destructuring in contractService.ts: isRegistered as boolean
-- [x] Fix buyPackage check in contractService.ts: if (!userRecord.isRegistered)
-- [x] Fix referrer check in registration in contractService.ts: if (!referrerRecord.isRegistered && ...)
-- [x] Update useMLMData.js: isRegistered: userRecord.isRegistered
-- [x] Update fallback in useMLMData.js: isRegistered: false
+# TODO: Create Referrers Page
+
+## Completed Steps
+- [x] Modify contractService.ts: Update getUserReferrers to return { referrers: Address[], count: bigint }
+- [x] Create src/pages/ReferrersPage.jsx: Implement the page component to fetch and display user referrers with complete details
+- [x] Update App.tsx: Add route for "/referrers" pointing to ReferrersPage
+- [x] Update Navbar.tsx: Add navigation button for "Referrers"
+
+## Pending Steps
+- [ ] Test the page: Ensure referrers are fetched and displayed correctly, add loading states and error handling

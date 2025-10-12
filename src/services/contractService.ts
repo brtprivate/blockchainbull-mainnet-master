@@ -97,7 +97,7 @@ interface DWCContractInteractions {
   getUsersLength: () => Promise<bigint>;
   getContractBalance: () => Promise<bigint>;
   getAllStakeReward: () => Promise<bigint>;
-  getUserReferrers: (user: Address) => Promise<bigint>;
+  getUserReferrers: (user: Address) => Promise<{ referrers: Address[]; count: bigint }>;
 }
 
 // Helper function to format percentages
@@ -1223,17 +1223,18 @@ export const dwcContractInteractions: DWCContractInteractions = {
     }
   },
 
-  async getUserReferrers(user: Address): Promise<bigint> {
+  async getUserReferrers(user: Address): Promise<{ referrers: Address[]; count: bigint }> {
     try {
-      const [, count] = (await readContract(config, {
+      const [referrers, count] = (await readContract(config, {
         abi: DWC_ABI,
         address: DWC_CONTRACT_ADDRESS,
         functionName: "getUserReferrers",
         args: [user],
         chainId: MAINNET_CHAIN_ID,
       })) as [Address[], bigint];
+      console.log(`User referrers for ${user}:`, referrers);
       console.log(`User referrers count for ${user}: ${count}`);
-      return count;
+      return { referrers, count };
     } catch (error: any) {
       console.error(`Error fetching user referrers: ${error.message || error}`);
       throw error;

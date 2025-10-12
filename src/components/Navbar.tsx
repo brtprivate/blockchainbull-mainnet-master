@@ -204,6 +204,19 @@ const Navbar: React.FC<NavbarProps> = ({ selectedSection, onSectionChange }) => 
                 >
                   Home
                 </Button>
+                <Button
+                  color="inherit"
+                  component={RouterLink}
+                  to="/referrers"
+                  sx={{
+                    borderRadius: '20px',
+                    px: 2,
+                    backgroundColor: isActive('/referrers') ? 'rgba(255, 255, 255, 0.15)' : 'transparent'
+                  }}
+                  startIcon={<PeopleIcon />}
+                >
+                  My Referrers
+                </Button>
                 {/* <Button
                   color="inherit"
                   component={RouterLink}

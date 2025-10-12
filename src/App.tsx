@@ -27,6 +27,7 @@ import SwapPage from "./pages/SwapPage";
 import RewardsPage from "./pages/RewardsPage";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
+import ReferrersPage from "./pages/ReferrersPage";
 
 // Theme configuration
 const theme = createTheme({
@@ -103,8 +104,9 @@ function App() {
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/dashboard" element={<MLMDashboard />} />
-                    
+
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/referrers" element={<ReferrersPage />} />
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
