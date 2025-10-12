@@ -1,0 +1,28 @@
+/* Web3Modal Trust Wallet Priority Styles */
+
+/* Trust Wallet Priority - Make it stand out */
+w3m-modal wui-wallet-button[data-wallet-id="4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0"] {
+  order: -999 !important;
+  border: 2px solid #FFA000 !important;
+  background: linear-gradient(135deg, #FFA000 0%, #FF8F00 100%) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 15px rgba(255, 160, 0, 0.4) !important;
+  margin-bottom: 8px !important;
+}
+
+/* Trust Wallet text styling */
+w3m-modal wui-wallet-button[data-wallet-id="4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0"] wui-text {
+  color: white !important;
+  font-weight: bold !important;
+}
+
+/* Mobile specific - Trust Wallet first */
+@media (max-width: 768px) {
+  w3m-modal wui-wallet-button[data-wallet-id="4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0"] {
+    order: -999 !important;
+    transform: scale(1.1) !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+

@@ -1,0 +1,6 @@
+- [x] Update UserRecord interface in contractService.ts: isRegistered: boolean
+- [x] Update getUserRecord destructuring in contractService.ts: isRegistered as boolean
+- [x] Fix buyPackage check in contractService.ts: if (!userRecord.isRegistered)
+- [x] Fix referrer check in registration in contractService.ts: if (!referrerRecord.isRegistered && ...)
+- [x] Update useMLMData.js: isRegistered: userRecord.isRegistered
+- [x] Update fallback in useMLMData.js: isRegistered: false

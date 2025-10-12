@@ -1,0 +1,63 @@
+{
+  "name": "safemin",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@mui/x-charts": "^8.11.0",
+    "@reown/walletkit": "^1.2.8",
+    "@tanstack/react-query": "^5.81.5",
+    "@wagmi/core": "^2.17.3",
+    "@walletconnect/core": "^2.21.4",
+    "@walletconnect/utils": "^2.21.4",
+    "@web3modal/core": "^5.1.11",
+    "@web3modal/html": "^2.7.1",
+    "@web3modal/ui": "^5.1.11",
+    "@web3modal/wagmi": "^5.1.11",
+    "buffer": "^6.0.3",
+    "ethers": "^5.8.0",
+    "express": "^4.18.0",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.542.0",
+    "process": "^0.11.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.0",
+    "viem": "^2.31.4",
+    "wagmi": "^2.15.6"
+  },
+  "devDependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@eslint/js": "^9.34.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@vitejs/plugin-react": "^4.2.1",
+    "browserify-zlib": "^0.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.3.0",
+    "https-browserify": "^1.0.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "terser": "^5.43.1",
+    "typescript": "^5.4.5",
+    "url": "^0.11.4",
+    "util": "^0.12.5",
+    "vite": "^6.3.5"
+  },
+  "resolutions": {
+    "@tanstack/react-query": "^5.81.5"
+  }
+}
