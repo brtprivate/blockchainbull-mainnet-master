@@ -5,7 +5,7 @@ import {
   waitForTransactionReceipt,
 } from "@wagmi/core";
 import { config } from "../config/web3modal";
-import { bsc,bscTestnet } from "wagmi/chains";
+import { bsc, bscTestnet } from "wagmi/chains";
 import type { Address } from "viem";
 import { parseUnits, formatUnits, decodeErrorResult } from "viem";
 import {
@@ -16,18 +16,382 @@ import {
 
 // Export USDC_ABI for use in other files
 export { USDC_ABI };
-// https://testnet.bscscan.com/address/0xe4992bb7ca3cea0a8ccc294ad4016336b01e9197#readContract
-// Contract configuration - BSC Mainnet
+// https://testnet.bscscan.com/address/0x0587ff341ebdd78a84023ef0781e20041b01017c#readContract// Contract configuration - BSC Mainnet
 export const DWC_CONTRACT_ADDRESS =
-  "0xe4992bb7ca3cea0a8ccc294ad4016336b01e9197" as Address;
+  "0x0587ff341ebdd78a84023ef0781e20041b01017c" as Address;
 export const MAINNET_CHAIN_ID = 97;
 export const TESTNET_CHAIN_ID = MAINNET_CHAIN_ID;
-const ChainFun=bscTestnet;
+const ChainFun = bscTestnet;
 // Add getChainId function for compatibility
 export const getChainId = () => MAINNET_CHAIN_ID;
 
 // DWC Contract ABI
-export const DWC_ABI = [{"inputs":[{"internalType":"address","name":"initialOwner","type":"address"},{"internalType":"address","name":"_token","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"package","type":"uint256"}],"name":"LevelPurchased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"Registration","type":"event"},{"inputs":[],"name":"MAX_ROI","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"buyApexPro","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyBasicBlock","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyEliteNexus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyGrowthLink","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyInfinityClub","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyPowerMesh","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyPrimeVault","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyProLedger","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyQuantumTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buySilverMatrix","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyStarterNode","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyTitanMax","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyTurboChain","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyUltraSync","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyVertexPlus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_index","type":"uint256"}],"name":"calculateClaimAble","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_directIncome","type":"uint256"}],"name":"changeDirectPercentage","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"contractPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"directIncome","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getContractBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getUSersLengh","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"getUserReferrers","outputs":[{"internalType":"address[]","name":"","type":"address[]"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getallstakereward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"levelIncome","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"liquidity","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"packagePrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"percentDivider","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ref","type":"address"}],"name":"registration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roiPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"stakeRecord","outputs":[{"internalType":"uint256","name":"packageIndex","type":"uint256"},{"internalType":"uint256","name":"lasClaimTime","type":"uint256"},{"internalType":"uint256","name":"rewardClaimed","type":"uint256"},{"internalType":"uint256","name":"maxRoi","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"uniqueUsers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"},{"internalType":"uint256","name":"newPercent","type":"uint256"}],"name":"updateRoiPercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userRecord","outputs":[{"internalType":"uint256","name":"totalInvestment","type":"uint256"},{"internalType":"uint256","name":"directBusiness","type":"uint256"},{"internalType":"address","name":"referrer","type":"address"},{"internalType":"uint256","name":"referrerBonus","type":"uint256"},{"internalType":"uint256","name":"levelIncome","type":"uint256"},{"internalType":"uint256","name":"totalWithdrawn","type":"uint256"},{"internalType":"bool","name":"isRegistered","type":"bool"},{"internalType":"uint256","name":"stakeCount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_index","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
+export const DWC_ABI = [
+  {
+    inputs: [
+      { internalType: "address", name: "initialOwner", type: "address" },
+      { internalType: "address", name: "_token", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    name: "OwnableInvalidOwner",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "package",
+        type: "uint256",
+      },
+    ],
+    name: "LevelPurchased",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+    ],
+    name: "Registration",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "MAX_ROI",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyApexPro",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyBasicBlock",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyEliteNexus",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyGrowthLink",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyInfinityClub",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyPowerMesh",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyPrimeVault",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyProLedger",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyQuantumTier",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buySilverMatrix",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyStarterNode",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyTitanMax",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyTurboChain",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyUltraSync",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "buyVertexPlus",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "_index", type: "uint256" },
+    ],
+    name: "calculateClaimAble",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_directIncome", type: "uint256" },
+    ],
+    name: "changeDirectPercentage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractPercent",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "directIncome",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getContractBalance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "userAddress", type: "address" },
+      { internalType: "uint256", name: "level", type: "uint256" },
+    ],
+    name: "getLevelCount",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUSersLengh",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_user", type: "address" }],
+    name: "getUserReferrers",
+    outputs: [
+      { internalType: "address[]", name: "", type: "address[]" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getallstakereward",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "levelIncome",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "liquidity",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "packagePrice",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "percentDivider",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "ref", type: "address" }],
+    name: "registration",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "roiPercent",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+    ],
+    name: "stakeRecord",
+    outputs: [
+      { internalType: "uint256", name: "packageIndex", type: "uint256" },
+      { internalType: "uint256", name: "lasClaimTime", type: "uint256" },
+      { internalType: "uint256", name: "rewardClaimed", type: "uint256" },
+      { internalType: "uint256", name: "maxRoi", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "uniqueUsers",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "index", type: "uint256" },
+      { internalType: "uint256", name: "newPercent", type: "uint256" },
+    ],
+    name: "updateRoiPercent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "userRecord",
+    outputs: [
+      { internalType: "uint256", name: "totalInvestment", type: "uint256" },
+      { internalType: "uint256", name: "directBusiness", type: "uint256" },
+      { internalType: "address", name: "referrer", type: "address" },
+      { internalType: "uint256", name: "referrerBonus", type: "uint256" },
+      { internalType: "uint256", name: "levelIncome", type: "uint256" },
+      { internalType: "uint256", name: "totalWithdrawn", type: "uint256" },
+      { internalType: "bool", name: "isRegistered", type: "bool" },
+      { internalType: "uint256", name: "stakeCount", type: "uint256" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_index", type: "uint256" }],
+    name: "withdraw",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  { stateMutability: "payable", type: "receive" },
+];
 // Interfaces for complex return types
 interface UserRecord {
   totalInvestment: bigint;
@@ -97,7 +461,11 @@ interface DWCContractInteractions {
   getUsersLength: () => Promise<bigint>;
   getContractBalance: () => Promise<bigint>;
   getAllStakeReward: () => Promise<bigint>;
-  getUserReferrers: (user: Address) => Promise<{ referrers: Address[]; count: bigint }>;
+  getUserReferrers: (
+    user: Address
+  ) => Promise<{ referrers: Address[]; count: bigint }>;
+  getLevelIncome: (index: bigint) => Promise<bigint>;
+  getLevelCount: (userAddress: Address, level: bigint) => Promise<bigint>;
 }
 
 // Helper function to format percentages
@@ -913,22 +1281,22 @@ export const dwcContractInteractions: DWCContractInteractions = {
 
   async getUserRecord(user: Address): Promise<UserRecord> {
     try {
-    const [
-      totalInvestment,
-      directBusiness,
-      referrer,
-      referrerBonus,
-      levelIncome,
-      totalWithdrawn,
-      isRegistered,
-      stakeCount,
-    ] = (await readContract(config, {
-      abi: DWC_ABI,
-      address: DWC_CONTRACT_ADDRESS,
-      functionName: "userRecord",
-      args: [user],
-      chainId: MAINNET_CHAIN_ID,
-    })) as [bigint, bigint, Address, bigint, bigint, bigint, boolean, bigint];
+      const [
+        totalInvestment,
+        directBusiness,
+        referrer,
+        referrerBonus,
+        levelIncome,
+        totalWithdrawn,
+        isRegistered,
+        stakeCount,
+      ] = (await readContract(config, {
+        abi: DWC_ABI,
+        address: DWC_CONTRACT_ADDRESS,
+        functionName: "userRecord",
+        args: [user],
+        chainId: MAINNET_CHAIN_ID,
+      })) as [bigint, bigint, Address, bigint, bigint, bigint, boolean, bigint];
 
       if (totalInvestment === undefined || directBusiness === undefined) {
         // Example check; extend as needed
@@ -1223,7 +1591,9 @@ export const dwcContractInteractions: DWCContractInteractions = {
     }
   },
 
-  async getUserReferrers(user: Address): Promise<{ referrers: Address[]; count: bigint }> {
+  async getUserReferrers(
+    user: Address
+  ): Promise<{ referrers: Address[]; count: bigint }> {
     try {
       const [referrers, count] = (await readContract(config, {
         abi: DWC_ABI,
@@ -1237,6 +1607,40 @@ export const dwcContractInteractions: DWCContractInteractions = {
       return { referrers, count };
     } catch (error: any) {
       console.error(`Error fetching user referrers: ${error.message || error}`);
+      throw error;
+    }
+  },
+
+  async getLevelIncome(index: bigint): Promise<bigint> {
+    try {
+      const income = (await readContract(config, {
+        abi: DWC_ABI,
+        address: DWC_CONTRACT_ADDRESS,
+        functionName: "levelIncome",
+        args: [index],
+        chainId: MAINNET_CHAIN_ID,
+      })) as bigint;
+      console.log(`Level income for index ${index}: ${income}`);
+      return income;
+    } catch (error: any) {
+      console.error(`Error fetching level income: ${error.message || error}`);
+      throw error;
+    }
+  },
+
+  async getLevelCount(userAddress: Address, level: bigint): Promise<bigint> {
+    try {
+      const count = (await readContract(config, {
+        abi: DWC_ABI,
+        address: DWC_CONTRACT_ADDRESS,
+        functionName: "getLevelCount",
+        args: [userAddress, level],
+        chainId: MAINNET_CHAIN_ID,
+      })) as bigint;
+      console.log(`Level ${level} count for user ${userAddress}: ${count}`);
+      return count;
+    } catch (error: any) {
+      console.error(`Error fetching level count: ${error.message || error}`);
       throw error;
     }
   },
@@ -1285,4 +1689,5 @@ export const {
   getAllStakeReward,
   getUserReferrers,
   getUSDTBalance,
+  getLevelIncome,
 } = dwcContractInteractions;
