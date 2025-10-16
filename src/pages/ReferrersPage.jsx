@@ -76,7 +76,7 @@ const ReferrersPage = () => {
 
       // Fetch level income percentages/rates for levels 1-15 (contract configuration)
       const levelIncomePromises = [];
-      for (let i = 1; i <= 15; i++) {
+      for (let i = 1; i <= 10; i++) {
         levelIncomePromises.push(
           dwcContractInteractions.getLevelIncome(BigInt(i))
             .then((incomeRate) => {
@@ -98,7 +98,7 @@ const ReferrersPage = () => {
 
       // Fetch level count for levels 1-15
       const levelCountPromises = [];
-      for (let i = 1; i <= 15; i++) {
+      for (let i = 1; i <= 10; i++) {
         levelCountPromises.push(
           dwcContractInteractions.getLevelCount(wallet.account, BigInt(i))
             .then((count) => {
