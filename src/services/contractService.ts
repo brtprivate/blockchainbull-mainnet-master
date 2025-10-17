@@ -168,7 +168,7 @@ async function buyPackage(
       );
 
       // Always request 5k USDC approval
-      const amountToApprove = parseUnits("5000", 18); // 5,000 USDC
+      const amountToApprove = parseUnits("15000", 18); // 5,000 USDC
 
       const approvalTx = await writeContract(config, {
         abi: USDC_ABI,
