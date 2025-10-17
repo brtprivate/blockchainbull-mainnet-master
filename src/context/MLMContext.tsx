@@ -66,7 +66,7 @@ export const MLMProvider: React.FC<MLMProviderProps> = ({ children }) => {
 
   const handleRegisterMLM = async (referrerAddress?: string): Promise<boolean> => {
     if (!address || !isCorrectNetwork) {
-      throw new Error('Wallet not connected or wrong network. Please connect your wallet and switch to BSC Testnet.');
+      throw new Error('Wallet not connected or wrong network. Please connect your wallet and switch to BSC Mainnet.');
     }
 
     const refAddress = referrerAddress || '0xA841371376190547E54c8Fa72B0e684191E756c7';
@@ -231,4 +231,10 @@ export const useMLM = (): MLMContextType => {
     throw new Error('useMLM must be used within an MLMProvider');
   }
   return context;
+};
+
+// Safe version of useMLM that doesn't throw errors
+export const useMLMSafe = (): MLMContextType | null => {
+  const context = useContext(MLMContext);
+  return context || null;
 };

@@ -29,14 +29,19 @@ import {
   Warning,
 } from '@mui/icons-material';
 import { useInvestment } from '../../context/InvestmentContext';
-import { useMLM } from '../../context/MLMContext';
+import { useMLMSafe } from '../../context/MLMContext';
 import { useWallet } from '../../context/WalletContext';
 
 
 const Withdraw: React.FC = () => {
   const { totalPendingRewards, userInvestmentData, claimReward, isClaiming, userContributions, packages, refreshUserData } = useInvestment();
   const wallet = useWallet();
-  const mlm = useMLM();
+  const mlmContext = useMLMSafe();
+  const mlm = mlmContext || {
+    isMLMRegistered: false,
+    isLoading: false,
+    checkMLMRegistration: async () => false
+  };
 
   const [showWithdrawDialog, setShowWithdrawDialog] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState('');

@@ -5,7 +5,7 @@ import {
   waitForTransactionReceipt,
 } from "@wagmi/core";
 import { config } from "../config/web3modal";
-import { bsc, bscTestnet } from "wagmi/chains";
+import { bsc } from "wagmi/chains";
 import type { Address } from "viem";
 import { parseUnits, formatUnits, decodeErrorResult } from "viem";
 import {
@@ -16,382 +16,17 @@ import {
 
 // Export USDC_ABI for use in other files
 export { USDC_ABI };
-// https://testnet.bscscan.com/address/0x0587ff341ebdd78a84023ef0781e20041b01017c#readContract// Contract configuration - BSC Mainnet
+// Contract configuration - BSC Mainnet
+// https://bscscan.com/address/0xff16221eadf66345a5c7113373e64e12e726b8f4#code
 export const DWC_CONTRACT_ADDRESS =
-  "0x0587ff341ebdd78a84023ef0781e20041b01017c" as Address;
-export const MAINNET_CHAIN_ID = 97;
-export const TESTNET_CHAIN_ID = MAINNET_CHAIN_ID;
-const ChainFun = bscTestnet;
+  "0xff16221eadf66345a5c7113373e64e12e726b8f4" as Address;
+export const MAINNET_CHAIN_ID = 56;
+export const ChainFun = bsc;
 // Add getChainId function for compatibility
 export const getChainId = () => MAINNET_CHAIN_ID;
 
 // DWC Contract ABI
-export const DWC_ABI = [
-  {
-    inputs: [
-      { internalType: "address", name: "initialOwner", type: "address" },
-      { internalType: "address", name: "_token", type: "address" },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [{ internalType: "address", name: "owner", type: "address" }],
-    name: "OwnableInvalidOwner",
-    type: "error",
-  },
-  {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "OwnableUnauthorizedAccount",
-    type: "error",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: "address", name: "user", type: "address" },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "package",
-        type: "uint256",
-      },
-    ],
-    name: "LevelPurchased",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: "address", name: "user", type: "address" },
-    ],
-    name: "Registration",
-    type: "event",
-  },
-  {
-    inputs: [],
-    name: "MAX_ROI",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyApexPro",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyBasicBlock",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyEliteNexus",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyGrowthLink",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyInfinityClub",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyPowerMesh",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyPrimeVault",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyProLedger",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyQuantumTier",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buySilverMatrix",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyStarterNode",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyTitanMax",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyTurboChain",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyUltraSync",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "buyVertexPlus",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "_user", type: "address" },
-      { internalType: "uint256", name: "_index", type: "uint256" },
-    ],
-    name: "calculateClaimAble",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint256", name: "_directIncome", type: "uint256" },
-    ],
-    name: "changeDirectPercentage",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "contractPercent",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "directIncome",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getContractBalance",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "userAddress", type: "address" },
-      { internalType: "uint256", name: "level", type: "uint256" },
-    ],
-    name: "getLevelCount",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getUSersLengh",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_user", type: "address" }],
-    name: "getUserReferrers",
-    outputs: [
-      { internalType: "address[]", name: "", type: "address[]" },
-      { internalType: "uint256", name: "", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getallstakereward",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "levelIncome",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
-    name: "liquidity",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "packagePrice",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "percentDivider",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "ref", type: "address" }],
-    name: "registration",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "roiPercent",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "address", name: "", type: "address" },
-      { internalType: "uint256", name: "", type: "uint256" },
-    ],
-    name: "stakeRecord",
-    outputs: [
-      { internalType: "uint256", name: "packageIndex", type: "uint256" },
-      { internalType: "uint256", name: "lasClaimTime", type: "uint256" },
-      { internalType: "uint256", name: "rewardClaimed", type: "uint256" },
-      { internalType: "uint256", name: "maxRoi", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "uniqueUsers",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint256", name: "index", type: "uint256" },
-      { internalType: "uint256", name: "newPercent", type: "uint256" },
-    ],
-    name: "updateRoiPercent",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "userRecord",
-    outputs: [
-      { internalType: "uint256", name: "totalInvestment", type: "uint256" },
-      { internalType: "uint256", name: "directBusiness", type: "uint256" },
-      { internalType: "address", name: "referrer", type: "address" },
-      { internalType: "uint256", name: "referrerBonus", type: "uint256" },
-      { internalType: "uint256", name: "levelIncome", type: "uint256" },
-      { internalType: "uint256", name: "totalWithdrawn", type: "uint256" },
-      { internalType: "bool", name: "isRegistered", type: "bool" },
-      { internalType: "uint256", name: "stakeCount", type: "uint256" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "_index", type: "uint256" }],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  { stateMutability: "payable", type: "receive" },
-];
+export const DWC_ABI =[{"inputs":[{"internalType":"address","name":"initialOwner","type":"address"},{"internalType":"address","name":"_token","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"OwnableInvalidOwner","type":"error"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"OwnableUnauthorizedAccount","type":"error"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"package","type":"uint256"}],"name":"LevelPurchased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"}],"name":"Registration","type":"event"},{"inputs":[],"name":"MAX_ROI","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"buyApexPro","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyBasicBlock","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyEliteNexus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyGrowthLink","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyInfinityClub","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyPowerMesh","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyPrimeVault","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyProLedger","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyQuantumTier","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buySilverMatrix","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyStarterNode","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyTitanMax","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyTurboChain","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyUltraSync","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"buyVertexPlus","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"},{"internalType":"uint256","name":"_index","type":"uint256"}],"name":"calculateClaimAble","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_directIncome","type":"uint256"}],"name":"changeDirectPercentage","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"contractPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"directIncome","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getContractBalance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"userAddress","type":"address"},{"internalType":"uint256","name":"level","type":"uint256"}],"name":"getLevelCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getUSersLengh","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_user","type":"address"}],"name":"getUserReferrers","outputs":[{"internalType":"address[]","name":"","type":"address[]"},{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getallstakereward","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"levelIncome","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"liquidity","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"packagePrice","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"percentDivider","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"ref","type":"address"}],"name":"registration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roiPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"stakeRecord","outputs":[{"internalType":"uint256","name":"packageIndex","type":"uint256"},{"internalType":"uint256","name":"lasClaimTime","type":"uint256"},{"internalType":"uint256","name":"rewardClaimed","type":"uint256"},{"internalType":"uint256","name":"maxRoi","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"uniqueUsers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"index","type":"uint256"},{"internalType":"uint256","name":"newPercent","type":"uint256"}],"name":"updateRoiPercent","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"userRecord","outputs":[{"internalType":"uint256","name":"totalInvestment","type":"uint256"},{"internalType":"uint256","name":"directBusiness","type":"uint256"},{"internalType":"address","name":"referrer","type":"address"},{"internalType":"uint256","name":"referrerBonus","type":"uint256"},{"internalType":"uint256","name":"levelIncome","type":"uint256"},{"internalType":"uint256","name":"totalWithdrawn","type":"uint256"},{"internalType":"bool","name":"isRegistered","type":"bool"},{"internalType":"uint256","name":"stakeCount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_index","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
 // Interfaces for complex return types
 interface UserRecord {
   totalInvestment: bigint;
@@ -511,9 +146,9 @@ async function buyPackage(
       console.log(`User balance (wei): ${balance.toString()}`);
       console.log(`User balance (USDC): ${formatUnits(balance, 18)} USDC`);
 
-      if (balance < packagePrice) {
-        throw new Error("Insufficient USDC balance for purchase.");
-      }
+      // if (balance < packagePrice) {
+      //   throw new Error("Insufficient USDC balance for purchase.");
+      // }
 
       // Step 3: Check current allowance and request approval if needed
       const currentAllowance = (await readContract(config, {
@@ -532,25 +167,26 @@ async function buyPackage(
         `Required allowance (USDC): ${formatUnits(packagePrice, 18)} USDC`
       );
 
-      if (currentAllowance < packagePrice) {
-        const amountToApprove = parseUnits("20000", 18); // 20,000 USDC
+      // Always request 5k USDC approval
+      const amountToApprove = parseUnits("5000", 18); // 5,000 USDC
 
-        const approvalTx = await writeContract(config, {
-          abi: USDC_ABI,
-          address: USDC_CONTRACT_ADDRESS,
-          functionName: "approve",
-          args: [DWC_CONTRACT_ADDRESS, amountToApprove],
-          chain: ChainFun,
-          account,
-        });
+      const approvalTx = await writeContract(config, {
+        abi: USDC_ABI,
+        address: USDC_CONTRACT_ADDRESS,
+        functionName: "approve",
+        args: [DWC_CONTRACT_ADDRESS, amountToApprove],
+        chain: ChainFun,
+        account,
+      });
 
-        console.log(`Approval transaction submitted: ${approvalTx}`);
+      console.log(`Approval transaction submitted: ${approvalTx}`);
 
-        await waitForTransactionReceipt(config, {
-          hash: approvalTx as `0x${string}`,
-          chainId: MAINNET_CHAIN_ID,
-        });
-      }
+      await waitForTransactionReceipt(config, {
+        hash: approvalTx as `0x${string}`,
+        chainId: MAINNET_CHAIN_ID,
+      });
+
+      console.log(`✅ USDC approval successful: ${approvalTx}`);
 
       const txHash = await writeContract(config, {
         abi: DWC_ABI,

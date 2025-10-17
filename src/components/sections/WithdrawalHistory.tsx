@@ -34,7 +34,7 @@ import {
   Error,
 } from '@mui/icons-material';
 import { useInvestment } from '../../context/InvestmentContext';
-import { useMLM } from '../../context/MLMContext';
+import { useMLMSafe } from '../../context/MLMContext';
 import { useWallet } from '../../context/WalletContext';
 import { useTransactionHistory } from '../../context/TransactionHistoryContext';
 
@@ -52,7 +52,12 @@ interface WithdrawalRecord {
 const WithdrawalHistory: React.FC = () => {
   const { userInvestmentData, totalPendingRewards } = useInvestment();
   const wallet = useWallet();
-  const mlm = useMLM();
+  const mlmContext = useMLMSafe();
+  const mlm = mlmContext || {
+    isMLMRegistered: false,
+    isLoading: false,
+    checkMLMRegistration: async () => false
+  };
   const { getWithdrawalHistory, getTotalWithdrawals } = useTransactionHistory();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -497,7 +502,7 @@ const WithdrawalHistory: React.FC = () => {
                             color: 'primary.main',
                             '&:hover': { textDecoration: 'underline' }
                           }}
-                          onClick={() => window.open(`https://testnet.bscscan.com/tx/${withdrawal.txHash}`, '_blank')}
+                          onClick={() => window.open(`https://bscscan.com/tx/${withdrawal.txHash}`, '_blank')}
                         >
                           {withdrawal.txHash.slice(0, 10)}...{withdrawal.txHash.slice(-8)}
                         </Typography>

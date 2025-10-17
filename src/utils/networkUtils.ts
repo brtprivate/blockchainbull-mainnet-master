@@ -1,6 +1,6 @@
 import { switchChain } from '@wagmi/core';
 import { config } from '../config/web3modal';
-import { polygon } from 'wagmi/chains';
+import { bsc } from 'wagmi/chains';
 import { NETWORK_CONFIG } from '../config';
 
 /**
@@ -15,7 +15,7 @@ export const isCorrectNetwork = (chainId?: number): boolean => {
 };
 
 /**
- * Switch to the correct network (Polygon)
+ * Switch to the correct network (BSC Mainnet)
  */
 export const switchToCorrectNetwork = async (): Promise<boolean> => {
   try {
@@ -28,9 +28,9 @@ export const switchToCorrectNetwork = async (): Promise<boolean> => {
 };
 
 /**
- * Add Polygon to wallet if not already present
+ * Add BSC Mainnet to wallet if not already present
  */
-export const addPolygonToWallet = async (): Promise<boolean> => {
+export const addBSCToWallet = async (): Promise<boolean> => {
   try {
     if (typeof window === 'undefined' || !window.ethereum) {
       return false;
@@ -50,7 +50,7 @@ export const addPolygonToWallet = async (): Promise<boolean> => {
     });
     return true;
   } catch (error) {
-    console.error('Error adding Polygon to wallet:', error);
+    console.error('Error adding BSC to wallet:', error);
     return false;
   }
 };
@@ -71,7 +71,7 @@ export const validateNetwork = async (currentChainId?: number): Promise<boolean>
     }
 
     // If switching fails, try to add the network
-    return await addPolygonToWallet();
+    return await addBSCToWallet();
   } catch (error) {
     console.error('Error validating network:', error);
     return false;
@@ -107,11 +107,11 @@ export const formatNetworkError = (error: any): string => {
   }
   
   if (error?.message?.includes('gasLimit') || error?.message?.includes('Cannot destructure')) {
-    return 'Network configuration error. Please ensure you are connected to Polygon.';
+    return 'Network configuration error. Please ensure you are connected to BSC Mainnet.';
   }
   
   if (error?.message?.includes('insufficient funds')) {
-    return 'Insufficient funds for transaction. Please ensure you have enough MATIC for gas fees.';
+    return 'Insufficient funds for transaction. Please ensure you have enough BNB for gas fees.';
   }
   
   return error?.message || 'Unknown network error occurred';

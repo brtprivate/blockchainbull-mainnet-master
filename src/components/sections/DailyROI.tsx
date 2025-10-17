@@ -121,7 +121,7 @@ const DailyROI: React.FC = () => {
           packageId,
           dailyReturn: dailyReturn.toFixed(4),
           totalEarned: formatAmount(contribution.rewardClaimed),
-          status: roiPercentage >= 300 ? 'completed' : 'active'
+          status: roiPercentage >= 200 ? 'completed' : 'active'
         };
       });
       
@@ -354,14 +354,14 @@ const DailyROI: React.FC = () => {
                             variant="body2"
                             sx={{
                               fontWeight: 'bold',
-                              color: roiPercentage >= 300 ? '#4caf50' : '#2196f3'
+                              color: roiPercentage >= 200 ? '#4caf50' : '#2196f3'
                             }}
                           >
                             {roiPercentage.toFixed(2)}%
                           </Typography>
                           <LinearProgress
                             variant="determinate"
-                            value={Math.min(roiPercentage / 3, 100)}
+                            value={Math.min(roiPercentage / 2, 100)}
                             sx={{
                               ml: 2,
                               width: 60,
@@ -399,7 +399,7 @@ const DailyROI: React.FC = () => {
       <Alert severity="info" sx={{ mt: 3 }}>
         <Typography variant="body2">
           <strong>ROI Information:</strong> Daily returns are calculated based on your package's reward multiplier. 
-          Each investment can earn up to 300% ROI before completion. Returns are distributed every minute and can be claimed anytime.
+          Each investment can earn up to 200% ROI before completion. Returns are distributed every minute and can be claimed anytime.
         </Typography>
       </Alert>
     </Box>

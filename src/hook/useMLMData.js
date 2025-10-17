@@ -159,7 +159,7 @@ const useMLMData = (wallet, chainId, switchChain, setError, setIsLoading) => {
 
       const [usdtBalanceRaw, directIncome, contractPercent, maxRoi, contractBalanceRaw, totalUsersRaw] =
         await Promise.all([
-          dwcContractInteractions.getUSDCBalance(wallet.account), // Changed to getUSDCBalance for testnet
+          dwcContractInteractions.getUSDTBalance(wallet.account), // Changed to getUSDCBalance for testnet
           dwcContractInteractions.getDirectIncome(),
           dwcContractInteractions.getContractPercent(),
           dwcContractInteractions.getMaxRoi(),

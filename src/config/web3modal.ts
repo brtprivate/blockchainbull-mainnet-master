@@ -1,5 +1,5 @@
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
-import { bscTestnet } from 'wagmi/chains';
+import { bsc } from 'wagmi/chains';
 import { NETWORK_CONFIG } from '../config';
 
 const projectId = 'b0cebcda95846f0aabc833a9f05dca99';
@@ -11,7 +11,7 @@ const metadata = {
 };
 
 const bscChain = {
-  ...bscTestnet,
+  ...bsc,
   rpcUrls: {
     default: {
       http: [NETWORK_CONFIG.rpcUrl],

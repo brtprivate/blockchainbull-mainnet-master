@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { useWallet } from '../context/WalletContext';
-import { useMLM } from '../context/MLMContext';
+import { useMLMSafe } from '../context/MLMContext';
 import { useWeb3Modal, useWeb3ModalState } from '@web3modal/wagmi/react';
 import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -42,7 +42,15 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ selectedSection, onSectionChange }) => {
   // Use only ThirdWeb MLM Context for wallet connections
   const wallet = useWallet();
-  const mlm = useMLM();
+  
+  // Safely get MLM context
+  const mlmContext = useMLMSafe();
+  const mlm = mlmContext || {
+    isMLMRegistered: false,
+    isLoading: false,
+    checkMLMRegistration: async () => false
+  };
+  
   const { open } = useWeb3Modal();
   const { open: isModalOpen } = useWeb3ModalState();
   const navigate = useNavigate();

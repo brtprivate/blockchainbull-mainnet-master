@@ -70,7 +70,7 @@ const PerformanceOverview = ({ mlmData = {}, stakes = [], notRegistered, handleW
     const totalClaimed = stakes.reduce((sum, stake) => sum + (stake.rewardClaimed || 0), 0);
     const totalClaimable = stakes.reduce((sum, stake) => sum + (stake.claimable || 0), 0);
     const totalRewards = mlmData.totalWithdrawn || 0 + totalClaimed + totalClaimable;
-    const earningLimit = (mlmData.totalInvestment || 0) * 3;
+    const earningLimit = (mlmData.totalInvestment || 0) * 2;
     const used = mlmData.totalWithdrawn || 0 + totalClaimed + totalClaimable;
     const remaining = Math.max(0, earningLimit - used);
     const percentage = earningLimit > 0 ? Math.min(100, (used / earningLimit) * 100) : 0;

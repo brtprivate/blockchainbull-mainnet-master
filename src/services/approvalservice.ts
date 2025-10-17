@@ -1,344 +1,347 @@
 /**
- * USDC ERC20 Token Contract Interface
- * Submitted for verification at testnet.bscscan.com on 2025-03-12
- * Contract Address: 0x4aE58BfC16b20bD67755FFD5560e85779D962415
- * Contract Creator: 0xBA02934d...6C609d4db (171 days ago)
- * Token Tracker: BEP-20: USDC (USDC)
+ * USDT (Tether USD) BEP-20 Token Contract Interface
+ * BSC Mainnet Contract Address: 0x55d398326f99059fF775485246999027B3197955
+ * Token Tracker: BEP-20: USDT (Tether USD)
  * SPDX-License-Identifier: MIT
  */
 
-import { readContract, writeContract } from '@wagmi/core';
-import { config } from '../config/web3modal';
-import type { Address } from 'viem';
-import { bscTestnet } from 'wagmi/chains';
-// https://testnet.bscscan.com/address/0x4ae58bfc16b20bd67755ffd5560e85779d962415#writeContract
-// USDC Contract configuration - BSC Testnet
-export const USDC_CONTRACT_ADDRESS = '0x4aE58BfC16b20bD67755FFD5560e85779D962415' as Address;
-export const BSC_TESTNET_CHAIN_ID = 97;
+import { readContract, writeContract } from "@wagmi/core";
+import { config } from "../config/web3modal";
+import type { Address } from "viem";
+import { bsc } from "wagmi/chains";
+
+// https://bscscan.com/address/0x55d398326f99059fF775485246999027B3197955#writeContract
+// USDT Contract configuration - BSC Mainnet
+export const USDT_CONTRACT_ADDRESS =
+  "0x55d398326f99059fF775485246999027B3197955" as Address;
+export const BSC_MAINNET_CHAIN_ID = 56;
+
+// Keep USDC exports for backward compatibility
+export const USDC_CONTRACT_ADDRESS = USDT_CONTRACT_ADDRESS;
+export const BSC_TESTNET_CHAIN_ID = BSC_MAINNET_CHAIN_ID;
 
 // USDC Contract ABI
 export const USDC_ABI = [
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "_recipient",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
+        internalType: "address",
+        name: "spender",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "allowance",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "allowance",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "needed",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "needed",
+        type: "uint256",
+      },
     ],
-    "name": "ERC20InsufficientAllowance",
-    "type": "error"
+    name: "ERC20InsufficientAllowance",
+    type: "error",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
+        internalType: "address",
+        name: "sender",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
+        internalType: "uint256",
+        name: "balance",
+        type: "uint256",
       },
       {
-        "internalType": "uint256",
-        "name": "needed",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "needed",
+        type: "uint256",
+      },
     ],
-    "name": "ERC20InsufficientBalance",
-    "type": "error"
+    name: "ERC20InsufficientBalance",
+    type: "error",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "approver",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "approver",
+        type: "address",
+      },
     ],
-    "name": "ERC20InvalidApprover",
-    "type": "error"
+    name: "ERC20InvalidApprover",
+    type: "error",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
     ],
-    "name": "ERC20InvalidReceiver",
-    "type": "error"
+    name: "ERC20InvalidReceiver",
+    type: "error",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
     ],
-    "name": "ERC20InvalidSender",
-    "type": "error"
+    name: "ERC20InvalidSender",
+    type: "error",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
     ],
-    "name": "ERC20InvalidSpender",
-    "type": "error"
+    name: "ERC20InvalidSpender",
+    type: "error",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "Approval",
-    "type": "event"
+    name: "Approval",
+    type: "event",
   },
   {
-    "anonymous": false,
-    "inputs": [
+    anonymous: false,
+    inputs: [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "from",
+        type: "address",
       },
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        indexed: true,
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "Transfer",
-    "type": "event"
+    name: "Transfer",
+    type: "event",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
     ],
-    "name": "allowance",
-    "outputs": [
+    name: "allowance",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "spender",
-        "type": "address"
+        internalType: "address",
+        name: "spender",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "approve",
-    "outputs": [
+    name: "approve",
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "balanceOf",
-    "outputs": [
+    name: "balanceOf",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [
+    inputs: [],
+    name: "decimals",
+    outputs: [
       {
-        "internalType": "uint8",
-        "name": "",
-        "type": "uint8"
-      }
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
- 
 
   {
-    "inputs": [],
-    "name": "name",
-    "outputs": [
+    inputs: [],
+    name: "name",
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
+    inputs: [],
+    name: "symbol",
+    outputs: [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
+    stateMutability: "view",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "transfer",
-    "outputs": [
+    name: "transfer",
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
+        internalType: "address",
+        name: "from",
+        type: "address",
       },
       {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
       {
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
     ],
-    "name": "transferFrom",
-    "outputs": [
+    name: "transferFrom",
+    outputs: [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;
 
 // USDC Contract interaction functions
@@ -350,24 +353,30 @@ export const usdcContractInteractions = {
    * @param account - Wallet address to send the transaction from
    * @returns Transaction hash
    */
-  async approveUSDC(spender: Address, amount: bigint, account: Address): Promise<string> {
+  async approveUSDC(
+    spender: Address,
+    amount: bigint,
+    account: Address
+  ): Promise<string> {
     try {
-      console.log(`Approving ${amount} USDC for ${spender}`);
-      
+      console.log(`Approving ${amount.toString()} wei USDT for ${spender}`);
+
       const txHash = await writeContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'approve',
+        functionName: "approve",
         args: [spender, amount],
-        chain: bscTestnet,
+        chain: bsc,
         account: account,
       });
-      
-      console.log('USDC approval transaction hash:', txHash);
+
+      console.log("USDT approval transaction hash:", txHash);
       return txHash;
     } catch (error: any) {
-      console.error(`Error approving USDC: ${error.message || error}`);
-      throw new Error(`Failed to approve USDC: ${error.message || 'Unknown error'}`);
+      console.error(`Error approving USDT: ${error.message || error}`);
+      throw new Error(
+        `Failed to approve USDT: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -378,16 +387,18 @@ export const usdcContractInteractions = {
    */
   async getUSDCBalance(account: Address): Promise<bigint> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'balanceOf',
+        functionName: "balanceOf",
         args: [account],
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as bigint;
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as bigint;
     } catch (error: any) {
       console.error(`Error fetching USDC balance: ${error.message || error}`);
-      throw new Error(`Failed to fetch USDC balance: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch USDC balance: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -398,24 +409,30 @@ export const usdcContractInteractions = {
    * @param account - Wallet address to send the transaction from
    * @returns Transaction hash
    */
-  async transferUSDC(to: Address, amount: bigint, account: Address): Promise<string> {
+  async transferUSDC(
+    to: Address,
+    amount: bigint,
+    account: Address
+  ): Promise<string> {
     try {
       console.log(`Transferring ${amount} USDC to ${to}`);
-      
+
       const txHash = await writeContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'transfer',
+        functionName: "transfer",
         args: [to, amount],
-        chain: bscTestnet,
+        chain: bsc,
         account: account,
       });
-      
-      console.log('USDC transfer transaction hash:', txHash);
+
+      console.log("USDC transfer transaction hash:", txHash);
       return txHash;
     } catch (error: any) {
       console.error(`Error transferring USDC: ${error.message || error}`);
-      throw new Error(`Failed to transfer USDC: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to transfer USDC: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -427,24 +444,31 @@ export const usdcContractInteractions = {
    * @param account - Wallet address to send the transaction from
    * @returns Transaction hash
    */
-  async transferFromUSDC(from: Address, to: Address, amount: bigint, account: Address): Promise<string> {
+  async transferFromUSDC(
+    from: Address,
+    to: Address,
+    amount: bigint,
+    account: Address
+  ): Promise<string> {
     try {
       console.log(`Transferring ${amount} USDC from ${from} to ${to}`);
-      
+
       const txHash = await writeContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'transferFrom',
+        functionName: "transferFrom",
         args: [from, to, amount],
-        chain: bscTestnet,
+        chain: bsc,
         account: account,
       });
-      
-      console.log('USDC transferFrom transaction hash:', txHash);
+
+      console.log("USDC transferFrom transaction hash:", txHash);
       return txHash;
     } catch (error: any) {
       console.error(`Error in transferFrom USDC: ${error.message || error}`);
-      throw new Error(`Failed to transferFrom USDC: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to transferFrom USDC: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -456,16 +480,18 @@ export const usdcContractInteractions = {
    */
   async getAllowance(owner: Address, spender: Address): Promise<bigint> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'allowance',
+        functionName: "allowance",
         args: [owner, spender],
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as bigint;
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as bigint;
     } catch (error: any) {
       console.error(`Error fetching allowance: ${error.message || error}`);
-      throw new Error(`Failed to fetch allowance: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch allowance: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -475,15 +501,17 @@ export const usdcContractInteractions = {
    */
   async getTotalSupply(): Promise<bigint> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'totalSupply',
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as bigint;
+        functionName: "totalSupply",
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as bigint;
     } catch (error: any) {
       console.error(`Error fetching total supply: ${error.message || error}`);
-      throw new Error(`Failed to fetch total supply: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch total supply: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -493,15 +521,17 @@ export const usdcContractInteractions = {
    */
   async getName(): Promise<string> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'name',
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as string;
+        functionName: "name",
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as string;
     } catch (error: any) {
       console.error(`Error fetching token name: ${error.message || error}`);
-      throw new Error(`Failed to fetch token name: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch token name: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -511,15 +541,17 @@ export const usdcContractInteractions = {
    */
   async getSymbol(): Promise<string> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'symbol',
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as string;
+        functionName: "symbol",
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as string;
     } catch (error: any) {
       console.error(`Error fetching token symbol: ${error.message || error}`);
-      throw new Error(`Failed to fetch token symbol: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch token symbol: ${error.message || "Unknown error"}`
+      );
     }
   },
 
@@ -529,15 +561,17 @@ export const usdcContractInteractions = {
    */
   async getDecimals(): Promise<number> {
     try {
-      return await readContract(config, {
+      return (await readContract(config, {
         abi: USDC_ABI,
         address: USDC_CONTRACT_ADDRESS,
-        functionName: 'decimals',
-        chainId: BSC_TESTNET_CHAIN_ID,
-      }) as number;
+        functionName: "decimals",
+        chainId: BSC_MAINNET_CHAIN_ID,
+      })) as number;
     } catch (error: any) {
       console.error(`Error fetching decimals: ${error.message || error}`);
-      throw new Error(`Failed to fetch decimals: ${error.message || 'Unknown error'}`);
+      throw new Error(
+        `Failed to fetch decimals: ${error.message || "Unknown error"}`
+      );
     }
   },
 };
