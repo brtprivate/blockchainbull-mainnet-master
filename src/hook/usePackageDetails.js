@@ -32,7 +32,7 @@ const usePackageDetails = () => {
         }
         const updatedPackages = packages.map(pkg => ({
           ...pkg,
-          roiPercent: Number(percents[pkg.index]) / 10 || pkg.roiPercent, // Adjusted divider based on contract (percentDivider=10000, but ROI display as percent/100 for 0.55%)
+          roiPercent: Number(percents[pkg.index]) / 100 || pkg.roiPercent, // Adjusted divider based on contract (percentDivider=10000, but ROI display as percent/100 for 0.55%)
         }));
         setPackageDetails(updatedPackages);
       } catch (error) {
