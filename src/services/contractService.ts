@@ -19,7 +19,7 @@ export { USDC_ABI };
 // Contract configuration - BSC Mainnet
 // https://bscscan.com/address/0xff16221eadf66345a5c7113373e64e12e726b8f4#code
 export const DWC_CONTRACT_ADDRESS =
-  "0xff16221eadf66345a5c7113373e64e12e726b8f4" as Address;
+  "0x235fDACB3C5ed805541E2377151F2Ad11a87311e" as Address;
 export const MAINNET_CHAIN_ID = 56;
 export const ChainFun = bsc;
 // Add getChainId function for compatibility
