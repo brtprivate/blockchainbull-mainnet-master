@@ -21,6 +21,7 @@ export { USDC_ABI };
 export const DWC_CONTRACT_ADDRESS =
   "0x235fDACB3C5ed805541E2377151F2Ad11a87311e" as Address;
 export const MAINNET_CHAIN_ID = 56;
+
 export const ChainFun = bsc;
 // Add getChainId function for compatibility
 export const getChainId = () => MAINNET_CHAIN_ID;
