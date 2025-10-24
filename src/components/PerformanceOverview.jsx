@@ -32,7 +32,7 @@ import { formatCurrency, formatDate } from '../utils/utils';
 // Utility function to format ROI
 const formatROI = (roiPercent) => {
   if (typeof roiPercent !== 'number') return 'N/A';
-  return `${(roiPercent / 10).toFixed(1)}%`;
+  return `${(roiPercent / 100).toFixed(1)}%`;
 };
 
 const cardSx = {
