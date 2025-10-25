@@ -10,8 +10,17 @@ export default defineConfig({
     port: 7050,
     open: true,
     host: '0.0.0.0',
+    // Proxy disabled - using production API directly
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:5000',
+    //     changeOrigin: true,
+    //     secure: false,
+    //     rewrite: (path) => path.replace(/^\/api/, '/api')
+    //   }
+    // },
     headers: {
-      'Content-Security-Policy': "frame-ancestors 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app; frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app; connect-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.infura.io https://*.alchemy.com https://cca-lite.coinbase.com;"
+      'Content-Security-Policy': "frame-ancestors 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app; frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com https://*.pages.dev https://*.vercel.app https://*.ngrok-free.app; connect-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org https://secure.walletconnect.com wss://*.walletconnect.org wss://*.walletconnect.com https://*.infura.io https://*.alchemy.com https://cca-lite.coinbase.com https://db.blockchainbull.io https://*.blockchainbull.io;"
     }
   },
   define: {

@@ -578,6 +578,22 @@ async function buyPackage(
       }
 
       console.log(`✅ PACKAGE PURCHASE SUCCESSFUL: ${txHash}`);
+      
+      // Track investment in database
+      try {
+        const { investmentTracker } = await import('./investmentTracker');
+        const investmentAmount = parseFloat(formatUnits(packagePrice, 18));
+        await investmentTracker.trackUserInvestment(
+          account,
+          investmentAmount,
+          Number(packageIndex),
+          txHash as `0x${string}`
+        );
+      } catch (trackingError) {
+        console.warn('Failed to track investment in database:', trackingError);
+        // Don't throw error as contract purchase was successful
+      }
+      
       return txHash as `0x${string}`;
     } catch (error: any) {
       console.error(`❌ Purchase attempt ${attempt} failed:`, error);
@@ -824,6 +840,16 @@ export const dwcContractInteractions: DWCContractInteractions = {
         if (receipt.status === "reverted") {
           throw new Error("Registration transaction reverted.");
         }
+        
+        // Track user registration in database
+        try {
+          const { investmentTracker } = await import('./investmentTracker');
+          await investmentTracker.trackUserRegistration(account, referrer);
+        } catch (trackingError) {
+          console.warn('Failed to track user registration in database:', trackingError);
+          // Don't throw error as contract registration was successful
+        }
+        
         return txHash as `0x${string}`;
       } catch (error: any) {
         console.error(`Error registering user: ${error.message || error}`);
