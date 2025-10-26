@@ -200,3 +200,4 @@ class InvestmentTracker {
 
 export const investmentTracker = new InvestmentTracker();
 export default investmentTracker;
+

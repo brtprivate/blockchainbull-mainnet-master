@@ -49,6 +49,7 @@ const ReferrersPage = () => {
   const [levelCountData, setLevelCountData] = useState([]);
   const [levelWiseData, setLevelWiseData] = useState([]);
   const [userStats, setUserStats] = useState(null);
+  const [contractUserStats, setContractUserStats] = useState(null);
   const [notRegistered, setNotRegistered] = useState(false);
   const [expandedLevel, setExpandedLevel] = useState(null);
 
@@ -71,13 +72,21 @@ const ReferrersPage = () => {
       setIsLoading(true);
       setError('');
 
-      // Check if user is registered
+      // Check if user is registered and get contract stats
       const userRecord = await dwcContractInteractions.getUserRecord(wallet.account);
       if (!userRecord.isRegistered) {
         setNotRegistered(true);
         return;
       }
       setNotRegistered(false);
+
+      // Set contract user stats
+      setContractUserStats({
+        totalInvestment: parseFloat(formatUnits(userRecord.totalInvestment, 18)),
+        totalEarnings: parseFloat(formatUnits(userRecord.levelIncome, 18)),
+        totalWithdrawn: parseFloat(formatUnits(userRecord.totalWithdrawn, 18)),
+        registrationDate: null // Contract doesn't have registration date
+      });
 
       // Fetch data from both contract and API
       const [contractData, apiData] = await Promise.allSettled([
@@ -262,10 +271,10 @@ const ReferrersPage = () => {
       ) : (
         <Grid container spacing={3}>
           {/* 1. Summary Cards */}
-          {userStats && (
+          {contractUserStats && (
             <Grid item xs={12}>
               <Typography variant="h5" gutterBottom sx={{ color: '#b89250', fontWeight: 'bold', mt: 2, mb: 3, textAlign: 'center' }}>
-                📊 Summary Overview
+                📊 Summary Overview (Contract Data)
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={3}>
@@ -286,7 +295,7 @@ const ReferrersPage = () => {
                         <PeopleIcon sx={{ color: '#b89250', fontSize: 20 }} />
                       </Box>
                       <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: 'bold' }}>
-                        {userStats.totalReferrals}
+                        {userStats?.totalReferrals || levelCountData.reduce((sum, level) => sum + parseInt(level.count), 0)}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -309,7 +318,7 @@ const ReferrersPage = () => {
                         <MonetizationOnIcon sx={{ color: '#b89250', fontSize: 20 }} />
                       </Box>
                       <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: 'bold' }}>
-                        {userStats.totalInvestment.toFixed(2)} USDC
+                        {contractUserStats.totalInvestment.toFixed(2)} USDT
                       </Typography>
                     </CardContent>
                   </Card>
@@ -332,7 +341,7 @@ const ReferrersPage = () => {
                         <TrendingUpIcon sx={{ color: '#b89250', fontSize: 20 }} />
                       </Box>
                       <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: 'bold' }}>
-                        {userStats.totalEarnings.toFixed(2)} USDC
+                        {contractUserStats.totalEarnings.toFixed(2)} USDT
                       </Typography>
                     </CardContent>
                   </Card>
@@ -350,12 +359,12 @@ const ReferrersPage = () => {
                     <CardContent>
                       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
                         <Typography variant="body2" sx={{ color: '#b89250', fontWeight: 'bold' }}>
-                          Registration Date
+                          Total Withdrawn
                         </Typography>
-                        <PeopleIcon sx={{ color: '#b89250', fontSize: 20 }} />
+                        <TrendingUpIcon sx={{ color: '#b89250', fontSize: 20 }} />
                       </Box>
                       <Typography variant="h6" sx={{ color: '#ffffff', fontWeight: 'bold' }}>
-                        {userStats.registrationDate ? new Date(userStats.registrationDate).toLocaleDateString() : 'Not Available'}
+                        {contractUserStats.totalWithdrawn.toFixed(2)} USDT
                       </Typography>
                     </CardContent>
                   </Card>
@@ -444,7 +453,7 @@ const ReferrersPage = () => {
                           Level {levelData.level}
                         </Typography>
                         <Typography variant="body2" sx={{ color: '#ffffff' }}>
-                          {levelData.count} referrals • {levelData.totalInvestment.toFixed(2)} USDC invested • {levelData.totalEarnings.toFixed(2)} USDC earned
+                          {levelData.count} referrals • {levelData.totalInvestment.toFixed(2)} USDT invested • {levelData.totalEarnings.toFixed(2)} USDT earned
                         </Typography>
                       </Box>
                     </Box>
@@ -474,7 +483,7 @@ const ReferrersPage = () => {
                                   {address}
                                 </Typography>
                                 <Typography variant="caption" sx={{ color: '#ffffff', opacity: 0.7, mt: 1, display: 'block' }}>
-                                  Investment: {levelData.totalInvestment.toFixed(2)} USDC
+                                  Investment: {levelData.totalInvestment.toFixed(2)} USDT
                                 </Typography>
                               </CardContent>
                             </Card>
