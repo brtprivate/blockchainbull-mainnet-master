@@ -285,16 +285,16 @@ const useMLMData = (wallet, chainId, switchChain, setError, setIsLoading) => {
     }
   }, [wallet.isConnected, wallet.account, chainId]);
 
-  // Auto-refresh every 30 seconds to update claimable rewards
-  useEffect(() => {
-    if (wallet.isConnected && wallet.account) {
-      const interval = setInterval(() => {
-        fetchMlmData();
-      }, 30000); // 30 seconds
+  // Auto-refresh disabled - use manual refresh button instead
+  // useEffect(() => {
+  //   if (wallet.isConnected && wallet.account) {
+  //     const interval = setInterval(() => {
+  //       fetchMlmData();
+  //     }, 30000); // 30 seconds
 
-      return () => clearInterval(interval);
-    }
-  }, [wallet.isConnected, wallet.account, chainId]);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [wallet.isConnected, wallet.account, chainId]);
 
   return { mlmData, stakes, fetchMlmData, notRegistered };
 };
