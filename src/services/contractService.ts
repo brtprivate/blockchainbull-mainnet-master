@@ -19,7 +19,7 @@ export { USDC_ABI };
 // Contract configuration - BSC Mainnet
 // https://bscscan.com/address/0xff16221eadf66345a5c7113373e64e12e726b8f4#code
 export const DWC_CONTRACT_ADDRESS =
-  "0x235fDACB3C5ed805541E2377151F2Ad11a87311e" as Address;
+  "0x6f97154B1655e2754718eD6CdD8D55dC70F89672" as Address;
 export const MAINNET_CHAIN_ID = 56;
 
 export const ChainFun = bsc;
@@ -210,29 +210,6 @@ export const DWC_ABI = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "uint256", name: "_directIncome", type: "uint256" },
-    ],
-    name: "changeDirectPercentage",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "contractPercent",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "directIncome",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "getContractBalance",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
@@ -375,7 +352,6 @@ export const DWC_ABI = [
       { internalType: "uint256", name: "totalInvestment", type: "uint256" },
       { internalType: "uint256", name: "directBusiness", type: "uint256" },
       { internalType: "address", name: "referrer", type: "address" },
-      { internalType: "uint256", name: "referrerBonus", type: "uint256" },
       { internalType: "uint256", name: "levelIncome", type: "uint256" },
       { internalType: "uint256", name: "totalWithdrawn", type: "uint256" },
       { internalType: "bool", name: "isRegistered", type: "bool" },
@@ -494,10 +470,15 @@ async function buyPackage(
       console.log(`=== PACKAGE PURCHASE: ${functionName} ===`);
       console.log(`Account: ${account}, Attempt: ${attempt}`);
 
-      // Step 1: Check user registration
+      // Step 1: Check user registration (align with UI logic)
       const userRecord = await context.getUserRecord(account);
       console.log(`User record=>`, userRecord);
-      if (!userRecord.isRegistered) {
+      const hasReferrer =
+        (userRecord as any).referrer &&
+        (userRecord as any).referrer !==
+          "0x0000000000000000000000000000000000000000";
+      const isUserRegistered = Boolean((userRecord as any).isRegistered) || hasReferrer;
+      if (!isUserRegistered) {
         throw new Error("User must be registered before purchasing a package.");
       }
 
@@ -578,10 +559,10 @@ async function buyPackage(
       }
 
       console.log(`✅ PACKAGE PURCHASE SUCCESSFUL: ${txHash}`);
-      
+
       // Track investment in database
       try {
-        const { investmentTracker } = await import('./investmentTracker');
+        const { investmentTracker } = await import("./investmentTracker");
         const investmentAmount = parseFloat(formatUnits(packagePrice, 18));
         await investmentTracker.trackUserInvestment(
           account,
@@ -590,10 +571,10 @@ async function buyPackage(
           txHash as `0x${string}`
         );
       } catch (trackingError) {
-        console.warn('Failed to track investment in database:', trackingError);
+        console.warn("Failed to track investment in database:", trackingError);
         // Don't throw error as contract purchase was successful
       }
-      
+
       return txHash as `0x${string}`;
     } catch (error: any) {
       console.error(`❌ Purchase attempt ${attempt} failed:`, error);
@@ -807,15 +788,7 @@ export const dwcContractInteractions: DWCContractInteractions = {
         if (userRecord.isRegistered) {
           throw new Error("User already registered");
         }
-        const referrerRecord = await dwcContractInteractions.getUserRecord(
-          referrer
-        );
-        if (
-          !referrerRecord.isRegistered &&
-          referrer !== "0x07bFa2e2327b2b669347b6FD2aEb855eA9659b95"
-        ) {
-          throw new Error("Referrer does not exist");
-        }
+        // Do not pre-validate referrer existence here; let the contract enforce rules
         const gasEstimate = await estimateGas(config, {
           abi: DWC_ABI,
           address: DWC_CONTRACT_ADDRESS,
@@ -840,16 +813,19 @@ export const dwcContractInteractions: DWCContractInteractions = {
         if (receipt.status === "reverted") {
           throw new Error("Registration transaction reverted.");
         }
-        
+
         // Track user registration in database
         try {
-          const { investmentTracker } = await import('./investmentTracker');
+          const { investmentTracker } = await import("./investmentTracker");
           await investmentTracker.trackUserRegistration(account, referrer);
         } catch (trackingError) {
-          console.warn('Failed to track user registration in database:', trackingError);
+          console.warn(
+            "Failed to track user registration in database:",
+            trackingError
+          );
           // Don't throw error as contract registration was successful
         }
-        
+
         return txHash as `0x${string}`;
       } catch (error: any) {
         console.error(`Error registering user: ${error.message || error}`);
@@ -1437,14 +1413,15 @@ export const dwcContractInteractions: DWCContractInteractions = {
 
   async getContractPercent(): Promise<bigint> {
     try {
-      const percent = (await readContract(config, {
+      // The contract does not expose `contractPercent`; it exposes `percentDivider` instead
+      const divider = (await readContract(config, {
         abi: DWC_ABI,
         address: DWC_CONTRACT_ADDRESS,
-        functionName: "contractPercent",
+        functionName: "percentDivider",
         chainId: MAINNET_CHAIN_ID,
       })) as bigint;
-      console.log(`Contract percent: ${percent}`);
-      return percent;
+      console.log(`Percent divider: ${divider}`);
+      return divider;
     } catch (error: any) {
       console.error(
         `Error fetching contract percent: ${error.message || error}`
@@ -1455,14 +1432,10 @@ export const dwcContractInteractions: DWCContractInteractions = {
 
   async getDirectIncome(): Promise<bigint> {
     try {
-      const income = (await readContract(config, {
-        abi: DWC_ABI,
-        address: DWC_CONTRACT_ADDRESS,
-        functionName: "directIncome",
-        chainId: MAINNET_CHAIN_ID,
-      })) as bigint;
-      console.log(`Direct income: ${income}`);
-      return income;
+      // The current ABI does not have a `directIncome` getter.
+      // Return 0n gracefully so UIs relying on this do not crash.
+      console.warn("directIncome getter not present in ABI; returning 0");
+      return 0n;
     } catch (error: any) {
       console.error(`Error fetching direct income: ${error.message || error}`);
       throw error;

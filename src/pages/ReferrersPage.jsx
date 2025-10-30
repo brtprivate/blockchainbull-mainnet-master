@@ -26,6 +26,8 @@ import { useWallet } from '../context/WalletContext';
 import { useChainId, useSwitchChain } from 'wagmi';
 import { MAINNET_CHAIN_ID, dwcContractInteractions } from '../services/contractService';
 import { formatUnits } from 'viem';
+import { waitForTransactionReceipt } from '@wagmi/core';
+import { config } from '../config/web3modal';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import PeopleIcon from '@mui/icons-material/People';
@@ -44,6 +46,9 @@ const ReferrersPage = () => {
   const { switchChain } = useSwitchChain();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [referralCode, setReferralCode] = useState('');
+  const [registerError, setRegisterError] = useState('');
   const [referrersData, setReferrersData] = useState([]);
   const [levelIncomeData, setLevelIncomeData] = useState([]);
   const [levelCountData, setLevelCountData] = useState([]);
@@ -52,6 +57,60 @@ const ReferrersPage = () => {
   const [contractUserStats, setContractUserStats] = useState(null);
   const [notRegistered, setNotRegistered] = useState(false);
   const [expandedLevel, setExpandedLevel] = useState(null);
+
+  // ============================
+  // Register user
+  // ============================
+  const handleRegister = async () => {
+    setRegisterError('');
+    if (!wallet.isConnected || !wallet.account) {
+      setError('Please connect your wallet to register.');
+      return;
+    }
+
+    // Allow empty referral and fall back to default sponsor used elsewhere in the app
+    const DEFAULT_REFERRER = '0xA841371376190547E54c8Fa72B0e684191E756c7';
+    const refAddress = referralCode.trim() || DEFAULT_REFERRER;
+
+    if (chainId !== MAINNET_CHAIN_ID) {
+      try {
+        await switchChain({ chainId: MAINNET_CHAIN_ID });
+      } catch (error) {
+        setError('Please switch to BSC Mainnet.');
+        return;
+      }
+    }
+
+    try {
+      setIsLoading(true);
+      setError('');
+      setSuccess('');
+
+      const registerTx = await dwcContractInteractions.registration(refAddress, wallet.account);
+
+      await waitForTransactionReceipt(config, { 
+        hash: registerTx, 
+        chainId: MAINNET_CHAIN_ID,
+        confirmations: 2 
+      });
+
+      setSuccess(`Registration successful! Transaction: ${registerTx}`);
+      setReferralCode('');
+      setNotRegistered(false);
+      setTimeout(() => fetchReferrers(), 1000);
+    } catch (error) {
+      console.error('Error registering user:', error);
+      if (error.message?.includes('User rejected')) {
+        setRegisterError('Transaction was cancelled by user');
+      } else if (error.message?.includes('already registered')) {
+        setRegisterError('Address is already registered');
+      } else {
+        setRegisterError(`Failed to register: ${error.message || 'Unknown error'}`);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchReferrers = async () => {
     if (!wallet.isConnected || !wallet.account) {
@@ -74,7 +133,9 @@ const ReferrersPage = () => {
 
       // Check if user is registered and get contract stats
       const userRecord = await dwcContractInteractions.getUserRecord(wallet.account);
-      if (!userRecord.isRegistered) {
+      const hasReferrer = userRecord.referrer && userRecord.referrer !== '0x0000000000000000000000000000000000000000';
+      const isUserRegistered = Boolean(userRecord.isRegistered) || hasReferrer;
+      if (!isUserRegistered) {
         setNotRegistered(true);
         return;
       }
@@ -226,12 +287,12 @@ const ReferrersPage = () => {
     return (
       <RegisterScreen
         wallet={wallet}
-        referralCode=""
-        setReferralCode={() => { }}
-        handleRegister={() => { }}
-        isLoading={false}
+        referralCode={referralCode}
+        setReferralCode={setReferralCode}
+        handleRegister={handleRegister}
+        isLoading={isLoading}
         onBackToHome={() => window.location.href = '/'}
-        errorMessage=""
+        errorMessage={registerError}
       />
     );
   }
