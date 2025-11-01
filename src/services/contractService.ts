@@ -19,7 +19,7 @@ export { USDC_ABI };
 // Contract configuration - BSC Mainnet
 // https://bscscan.com/address/0xff16221eadf66345a5c7113373e64e12e726b8f4#code
 export const DWC_CONTRACT_ADDRESS =
-  "0x6f97154B1655e2754718eD6CdD8D55dC70F89672" as Address;
+  "0xb2489bEA0c3F5Fa9Cf0912cab0E5f6Ac7A1D6199" as Address;
 export const MAINNET_CHAIN_ID = 56;
 
 export const ChainFun = bsc;
@@ -477,7 +477,8 @@ async function buyPackage(
         (userRecord as any).referrer &&
         (userRecord as any).referrer !==
           "0x0000000000000000000000000000000000000000";
-      const isUserRegistered = Boolean((userRecord as any).isRegistered) || hasReferrer;
+      const isUserRegistered =
+        Boolean((userRecord as any).isRegistered) || hasReferrer;
       if (!isUserRegistered) {
         throw new Error("User must be registered before purchasing a package.");
       }
